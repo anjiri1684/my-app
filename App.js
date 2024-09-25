@@ -1,37 +1,80 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import {
+  Button,
+  StyleSheet,
+  TextInput,
+  View,
+  Text,
+  ScrollView,
+} from "react-native";
+import { useState } from "react";
 
 export default function App() {
-  const newYear = new Date().getFullYear();
-  const month = new Date().getMonth();
-  const date = new Date().getDate();
-
-  function digitalClock() {
-    const hour = new Date().getHours();
-    const minute = new Date().getMinutes();
-    const second = new Date().getSeconds();
-
-    return `${hour}:${minute}:${second}`;
+  const [entredGoalText, setEnteredGoalText] = useState("");
+  const [courseGoals, setCourseGoals] = useState([]);
+  function goalInputHandler(enteredText) {
+    setEnteredGoalText(enteredText);
   }
 
-  setInterval(digitalClock, 1000);
-
+  function addGoalHandler() {
+    setCourseGoals((courseGoals) => [...courseGoals, entredGoalText]);
+    setEnteredGoalText("");
+  }
   return (
-    <View style={styles.container}>
-      <Text>
-        {date}/{month}/{newYear}
-      </Text>
-      <Text>{digitalClock()}</Text>
-      <Text>Hello World!!</Text>
+    <View style={styles.appContainer}>
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.textInput}
+          placeholder="Enter your Course goals"
+          onChangeText={goalInputHandler}
+        />
+        <Button title="Add Goal" onPress={addGoalHandler} />
+      </View>
+      <View style={styles.goalsContainer}>
+        <ScrollView>
+          {courseGoals.map((goal) => (
+            <View key={goal} style={styles.goalItem}>
+              <Text style={styles.goalText}>{goal}</Text>
+            </View>
+          ))}
+        </ScrollView>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  appContainer: {
+    paddingTop: 50,
+    paddingHorizontal: 16,
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
   },
+  inputContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 24,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+  },
+
+  textInput: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    width: "70%",
+    marginRight: 8,
+    padding: 8,
+  },
+  goalsContainer: {
+    flex: 5,
+  },
+  goalItem: {
+    margin: 8,
+    borderRadius: 6,
+    backgroundColor: "#5e0acc",
+    padding: 8,
+    width: "auto",
+  },
+
+  goalText: { color: "white" },
 });
