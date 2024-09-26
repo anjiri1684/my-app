@@ -60,10 +60,12 @@ const styles = StyleSheet.create({
 
   textInput: {
     borderWidth: 1,
-    borderColor: "#ccc",
-    width: "70%",
-    marginRight: 8,
-    padding: 8,
+    borderColor: "#e4d0ff",
+    width: "100%",
+    padding: 16,
+    backgroundColor: "#e4d0ff",
+    color: "#120438",
+    borderRadius: 6,
   },
 
   buttonContainer: {
